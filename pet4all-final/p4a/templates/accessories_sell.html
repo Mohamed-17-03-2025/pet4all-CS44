@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Sell Accessories
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Sell Accessories</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}
+                {{ form.name(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}
+                {{ form.description(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.price.label(class="form-control-label") }}
+                {{ form.price(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.image.label(class="form-control-label") }}
+                {{ form.image(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Sell Accessory</button>
+        </form>
+    </div>
+{% endblock %}

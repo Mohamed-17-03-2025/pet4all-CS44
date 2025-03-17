@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+    Buy Page
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Available Pets</h1>
+        <br>
+
+        <div class="row">
+            {% for pet in pets %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if pet.image_path %}
+                            <img src="{{ url_for('serve_uploads', filename='/' + pet.image_path) }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% else %}
+                            <img src="{{ url_for('serve_uploads', filename='/default_pet.jpg') }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{ pet.name }}</h5>
+                            <p class="card-text text-dark">
+                                <span class="font-weight-bold">Age:</span> {{ pet.age }}<br>
+                                <span class="font-weight-bold">Status:</span> {{ pet.status }}<br>
+                                <span class="font-weight-bold">Price:</span> ${{ pet.price }}<br>
+                                <span class="font-weight-bold">Description:</span> {{ pet.description }}<br>
+
+                            </p>
+                            <button class="btn btn-outline-dark">
+                                <a href="{{ url_for('pet_profile', pet_id=pet.id) }}" style="text-decoration: none; color: inherit;">
+                                    More Info
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

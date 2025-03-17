@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% block title %} Dog Accessories {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Dog Accessories</h1>
+
+        <a href="{{ url_for('sell_accessory_page') }}" class="btn btn-primary mb-4">Sell Accessories</a> 
+
+        <h2>Accessories for Sale</h2>
+        <div class="row">
+            {% for accessory in accessories %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                    <img src="{{ url_for('serve_uploads', filename='/' + accessory.image_path) }}" class="card-img-top" alt="Accessory Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ accessory.name }}</h5>
+                            <p class="card-text">{{ accessory.description }}</p>
+                            <p class="card-text">Price: ${{ accessory.price }}</p>
+                            <a href="#" class="btn btn-primary">Buy Now</a> 
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %} 

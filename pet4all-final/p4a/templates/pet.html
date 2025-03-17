@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Pet Profile: {{ pet.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                        {% if pet.image_path %}
+                            <img src="{{ url_for('serve_uploads', filename='/' + pet.image_path) }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% else %}
+                            <img src="{{ url_for('serve_uploads', filename='/default_pet.jpg') }}" class="card-img-top" alt="{{ pet.name }}">
+                        {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>{{ pet.name }}</h1>
+                        <br>
+                        <p><strong>Age:</strong> {{ pet.age }}</p>
+                        <p><strong>Status:</strong> {{ pet.status }}</p>
+                        {% if pet.status == 'Sell' %}
+                            <p><strong>Price:</strong> ${{ pet.price }}</p>
+                        {% endif %}
+                        <p><strong>Description:</strong> {{ pet.description }}</p>
+                        <p><strong>Owner's Number:</strong> {{ pet.seller_phone }}</p>
+                        <p><strong>Owner:</strong> <a href="{{ url_for('user_profile', user_id=pet.owner.id) }}">{{ pet.owner.name }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

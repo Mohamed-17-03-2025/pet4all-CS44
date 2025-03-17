@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}
+    Home Page
+{% endblock %}
+{% block content %}
+<br>
+<br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/buy_pet.jpg" class="card-img-top" alt="Buy a Pet">
+                    <div class="card-body">
+                        <h5 class="card-title">Buy a Pet</h5>
+                        <p class="card-text">Buy a pet for your loving home.</p>
+                        <a href="{{ url_for('buy_page') }}" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/add_pet.jpg" class="card-img-top" alt="Add a Pet">
+                    <div class="card-body">
+                        <h5 class="card-title">Add a Pet</h5>
+                        <p class="card-text">Add your pet to the community.</p>
+                        <a href="{{ url_for('add_page') }}" class="btn btn-primary">Add Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/adopt_pet.jpg" class="card-img-top" alt="Adopt a Pet">
+                    <div class="card-body">
+                        <h5 class="card-title">Adopt a Pet</h5>
+                        <p class="card-text">Find your perfect pet companion for adoption.</p>
+                        <a href="{{ url_for('adopt_page') }}" class="btn btn-primary">Adopt Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/recommend_pet.jpg" class="card-img-top" alt="Recommend a Pet">
+                    <div class="card-body">
+                        <h5 class="card-title">Recommend a Pet</h5>
+                        <p class="card-text">Get personalized recommendations for a pet based on your preferences.</p>
+                        <a href="{{ url_for('recommend_page') }}" class="btn btn-primary">Recommendations</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/forum.jpg" class="card-img-top" alt="Pet Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Forum</h5>
+                        <p class="card-text">A Forum to discuss all things pets related.</p>
+                        <a href="http://localhost/phpBB" class="btn btn-primary">Visit Forum</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="static/images/accessories.jpg" class="card-img-top" alt="Accessories">
+                    <div class="card-body">
+                        <h5 class="card-title">Accessories</h5>
+                        <p class="card-text">Explore a wide range of pet accessories for your pets.</p>
+                        <a href="{{ url_for('accessories_page') }}" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

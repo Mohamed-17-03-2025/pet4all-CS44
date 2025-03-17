@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}
+    Add a Pet
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="POST" class="form-register"  enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <h1>Enter your pet's info</h1>
+
+
+            <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}
+                {{ form.name(class="form-control", placeholder="Name") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.age.label(class="form-control-label") }}
+                {{ form.age(class="form-control", placeholder="Age") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.breed.label(class="form-control-label") }}
+                {{ form.breed(class="form-control", placeholder="Breed") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.price.label(class="form-control-label") }}
+                {{ form.price(class="form-control", placeholder="Price - 0 if you are not selling") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.status.label(class="form-control-label") }}
+                {{ form.status(class="form-control", placeholder="Status - eg. Sell, Adoption, Own") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}
+                {{ form.description(class="form-control", placeholder="Description") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.seller_phone.label(class="form-control-label") }}
+                {{ form.seller_phone(class="form-control", placeholder="Phone Number") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.image.label(class="form-control-label") }}
+                {{ form.image(class="form-control-file") }}
+            </div>
+
+            <br>
+
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </form>
+    </div>
+
+{% endblock %}

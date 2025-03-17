@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User Profile: {{ user.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="user-profile {% if current_user == user %}own-profile{% endif %}">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card profile-card">
+                            {% if user.image_path %}
+                                <img src="{{ url_for('serve_uploads', filename='/' + user.image_path) }}" class="card-img-top" alt="{{ user.name }}">
+                            {% else %}
+                                <img src="{{ url_for('serve_uploads', filename='/default.jpg') }}" class="card-img-top" alt="{{ user.name }}">
+                            {% endif %}
+                        <div class="card-body">
+                            <h1>{{ user.name }}</h1>
+                            <p><strong>Age:</strong> {{ user.age }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <p><strong>Rating:</strong> {{ user.rating  }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="self-profile-actions {% if current_user != user %}d-none{% endif %}">
+                        <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">Edit Profile</a>
+                    </div>
+                    <br>
+
+                    {% if current_user != user %}
+                    <div class="card"  id="rating">
+                        <div class="card-body">
+                            <div class="rating-form">
+                                <h2>Rate This User</h2>
+                                <form method="POST" action="{{ url_for('rate_user', user_id=user.id) }}">
+                                    {{ form.hidden_tag() }}
+                                    <fieldset class="form-group">
+                                        {% for rating_choice in rating_choices %}
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="rating" id="rating_{{ rating_choice }}" value="{{ rating_choice }}">
+                                            <label class="form-check-label" for="rating_{{ rating_choice }}">{{ rating_choice }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="comments-section card">
+                        <h3>Comments</h3>
+                        {% if user.reviews %}
+                            <div class="comment">
+                                <p>{{ user.reviews }}</p>
+                            </div>
+                        {% else %}
+                            <p>No comments yet.</p>
+                        {% endif %}
+                        <br>
+
+                        {% if current_user != user %}
+                        <div class="leave-comment">
+                            <form method="POST" action="{{ url_for('add_comment', user_id=user.id) }}">
+                                {{ form.hidden_tag() }}
+                                {{ form.comment.label(class_='form-label') }}
+                                {{ form.comment(class_='form-control', placeholder='Write your comment here') }}
+                                <button type="submit" class="btn btn-primary btn-sm">Submit Comment</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-pets">
+                <h2>Pets Owned by {{ user.name }}</h2>
+                <br>
+                <div class="row">
+                    {% for pet in user.pets %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                {% if pet.image_path %}
+                                    <img src="{{ url_for('serve_uploads', filename='/' + pet.image_path) }}" class="card-img-top" alt="{{ pet.name }}">
+                                {% else %}
+                                    <img src="{{ url_for('serve_uploads', filename='/default_pet.jpg') }}" class="card-img-top" alt="{{ pet.name }}">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pet.name }}</h5>
+                                    <p class="card-text">
+                                        Age: {{ pet.age }}<br>
+                                        Status: {{ pet.status }}<br>
+                                    </p>
+                                    <a href="{{ url_for('pet_profile', pet_id=pet.id) }}" class="btn btn-primary">View Profile</a>
+                                     {% if current_user == user %}
+                                      <a href="#"
+                                         class="btn btn-danger btn-sm"
+                                         onclick="if (confirm('Are you sure you want to delete this pet?')) { document.getElementById('delete-pet-{{ pet.id }}').submit(); }">
+                                         Delete Pet
+                                      </a>
+                                       <form id="delete-pet-{{ pet.id }}" action="{{ url_for('delete_pet', pet_id=pet.id) }}" method="POST" style="display: none;">
+                                        {{ form.csrf_token }}  </form>
+                                     {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('add_page') }}" class="btn btn-success">Add a Pet</a>
+            </div>
+            <br>
+            <div class="user-accessories">
+                <h2>Accessories Owned by {{ user.name }}</h2>
+                <br>
+                <div class="row">
+                    {% for accessory in user.accessories_sold %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="{{ url_for('serve_uploads', filename='/' + accessory.image_path) }}" class="card-img-top" alt="Accessory Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ accessory.name }}</h5>
+                                    <p class="card-text">{{ accessory.description }}</p>
+                                    <a href="{{url_for('accessories_page')}}" class="btn btn-primary">View Accessories</a>
+                                    {% if current_user == user %}
+                                        <a href="#"
+                                           class="btn btn-danger btn-sm"
+                                           onclick="if (confirm('Are you sure you want to delete this accessory?')) { document.getElementById('delete-accessory-{{ accessory.id }}').submit(); }">
+                                           Delete Accessory
+                                        </a>
+                                        <form id="delete-accessory-{{ accessory.id }}" action="{{ url_for('delete_accessory', accessory_id=accessory.id) }}" method="POST" style="display: none;">
+                                            {{ form.csrf_token }}
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}
+    Pet for You Page
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="POST" class="form-register" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <h1>Get Pet Recommendations</h1>
+            <br>
+            <!-- Grooming -->
+            {{ form.grooming.label() }}
+            {{ form.grooming(class="form-control", placeholder="Select willingness for grooming", choices=[('0', 'Not willing'), ('0.5', 'Neutral'), ('1', 'Very willing')]) }}
+            <br>
+            <hr>
+            {{ form.grooming_preference.label() }}
+            {{ form.grooming_preference(class="form-control", placeholder="Select grooming preference", choices=[('0', 'Low preference'), ('0.5', 'Moderate preference'), ('1', 'High preference')]) }}
+            <br>
+            <hr>
+            {{ form.minimal_grooming.label() }}
+            {{ form.minimal_grooming(class="form-control", placeholder="Select importance of minimal grooming", choices=[('0', 'Not important'), ('0.5', 'Neutral'), ('1', 'Very important')]) }}
+            <br>
+            <hr>
+            <!-- Shedding -->
+            {{ form.shedding.label() }}
+            {{ form.shedding(class="form-control", placeholder="Select acceptance of shedding", choices=[('0', 'Not willing'), ('0.5', 'Neutral'), ('1', 'Very willing')]) }}
+            <br>
+            <hr>
+            {{ form.shedding_preference.label() }}
+            {{ form.shedding_preference(class="form-control", placeholder="Select shedding preference", choices=[('0', 'Low preference'), ('0.5', 'Moderate preference'), ('1', 'High preference')]) }}
+            <br>
+            <hr>
+            {{ form.manage_shedding.label() }}
+            {{ form.manage_shedding(class="form-control", placeholder="Select comfort with managing shedding", choices=[('0', 'Not comfortable'), ('0.5', 'Neutral'), ('1', 'Very comfortable')]) }}
+            <br>
+            <hr>
+            <!-- Energy -->
+            {{ form.energy_level.label() }}
+            {{ form.energy_level(class="form-control", placeholder="Select preferred energy level", choices=[('0', 'Low'), ('0.5', 'Medium'), ('1', 'High')]) }}
+            <br>
+            <hr>
+            {{ form.daily_exercise.label() }}
+            {{ form.daily_exercise(class="form-control", placeholder="Select time for daily exercise", choices=[('0', 'Low commitment'), ('0.5', 'Moderate commitment'), ('1', 'High commitment')]) }}
+            <br>
+            <hr>
+            {{ form.outdoor_activities.label() }}
+            {{ form.outdoor_activities(class="form-control", placeholder="Select preference for outdoor activities", choices=[('0', 'Not preferred'), ('0.5', 'Neutral'), ('1', 'Preferred')]) }}
+            <br>
+            <hr>
+            <!-- Trainability -->
+            {{ form.trainability.label() }}
+            {{ form.trainability(class="form-control", placeholder="Select willingness for training", choices=[('0', 'Not willing'), ('0.5', 'Neutral'), ('1', 'Very willing')]) }}
+            <br>
+            <hr>
+            {{ form.obedience_training.label() }}
+            {{ form.obedience_training(class="form-control", placeholder="Select commitment to obedience training", choices=[('0', 'Low commitment'), ('0.5', 'Moderate commitment'), ('1', 'High commitment')]) }}
+            <br>
+            <hr>
+            {{ form.quick_learning.label() }}
+            {{ form.quick_learning(class="form-control", placeholder="Select preference for quick learning", choices=[('0', 'Not preferred'), ('0.5', 'Neutral'), ('1', 'Preferred')]) }}
+            <br>
+            <hr>
+            <!-- Demeanor -->
+            {{ form.demeanor.label() }}
+            {{ form.demeanor(class="form-control", placeholder="Select preferred demeanor", choices=[('0', 'Calm'), ('0.5', 'Playful'), ('1', 'Reserved')]) }}
+            <br>
+            <hr>
+            {{ form.playful.label() }}
+            {{ form.playful(class="form-control", placeholder="Select preference for a playful dog", choices=[('0', 'Not preferred'), ('0.5', 'Neutral'), ('1', 'Preferred')]) }}
+            <br>
+            <hr>
+            {{ form.reserved.label() }}
+            {{ form.reserved(class="form-control", placeholder="Select preference for a reserved companion", choices=[('0', 'Not preferred'), ('0.5', 'Neutral'), ('1', 'Preferred')]) }}
+            <br>
+            <hr>
+            <!-- Size -->
+            {{ form.size_of_living_space.label() }}
+            {{ form.size_of_living_space(class="form-control", placeholder="Select size of living space", choices=[('0', 'Small'), ('0.5', 'Medium'), ('1', 'Large')]) }}
+            <br>
+            <hr>
+            {{ form.preferred_size.label() }}
+            {{ form.preferred_size(class="form-control", placeholder="Select preferred dog size", choices=[('0', 'Small'), ('0.5', 'Medium'), ('1', 'Large')]) }}
+            <br>
+            <hr>
+            {{ form.indoor_space.label() }}
+            {{ form.indoor_space(class="form-control", placeholder="Select indoor space for the dog", choices=[('0', 'Limited'), ('0.5', 'Moderate'), ('1', 'Abundant')]) }}
+
+            <br>
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </form>
+
+        {% if recommendations_cluster is defined %}
+            <h2>Recommended Dog Breeds:</h2>
+            <br>
+            <div class="recommended-breeds">
+                {% for breed in recommendations_cluster['breed'] %}
+                    <div class="breed-card">
+                        <img src="{{ url_for('static', filename='images/breed_images/' + breed + '.jpg') }}" alt="{{ breed }}">
+                        <div class="breed-info">
+                            <h3>{{ breed }}</h3>
+                            <!-- Add more breed details here -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if recommendations_collab is defined %}
+            <h2>Top Similar Dog Breeds:</h2>
+            <br>
+            <div class="recommended-breeds">
+                {% for index, row in recommendations_collab.iterrows() %}
+                    <div class="breed-card">
+                        <img src="{{ url_for('static', filename='images/breed_images/' + row['breed'] + '.jpg') }}" alt="{{ row['breed'] }}">
+                        <div class="breed-info">
+                            <h3>{{ row['breed'] }}</h3>
+                            <p>Similarity: {{ row['similarity_percentage'] }}%</p>  <!-- Display similarity -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
